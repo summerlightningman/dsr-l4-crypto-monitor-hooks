@@ -4,8 +4,6 @@ export interface SearchProps {
 
 }
 
-
-
 export interface SearchState {
     value: SearchText
 }

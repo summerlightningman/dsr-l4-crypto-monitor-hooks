@@ -18,7 +18,7 @@ class Search extends React.Component<SearchProps, SearchState> {
 
     render() {
         return <SearchContainer>
-            <SearchInput onInput={this.handleInput}/>
+            <SearchInput onInput={this.handleInput} value={this.state.value}/>
         </SearchContainer>
     }
 }
