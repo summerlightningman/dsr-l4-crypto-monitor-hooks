@@ -8,7 +8,7 @@ const SearchInput = styled.input`
   border-radius: 10px 0 0 10px;
   border: 1px solid pink;
   font-size: 16pt;
-  padding: 0 10px;
+  padding: 0 15px;
 `;
 
 export default SearchInput;

@@ -9,7 +9,7 @@ class Search extends React.Component<SearchProps, SearchState> {
         super(props);
 
         this.state = {
-            value: 'Dogecoin'
+            value: ''
         };
     }
 
@@ -17,10 +17,14 @@ class Search extends React.Component<SearchProps, SearchState> {
         this.setState({value: e.currentTarget.value});
     }
 
+    search = () => {
+        // search
+    }
+
     render() {
         return <SearchContainer>
-            <SearchInput onInput={this.handleInput} value={this.state.value}/>
-            <SearchButton>Search</SearchButton>
+            <SearchInput onInput={this.handleInput} value={this.state.value} placeholder="Type cryptocurrency name..."/>
+            <SearchButton onClick={this.search}>Search</SearchButton>
         </SearchContainer>
     }
 }
