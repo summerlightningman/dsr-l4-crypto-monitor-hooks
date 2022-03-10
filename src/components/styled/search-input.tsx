@@ -6,7 +6,7 @@ const SearchInput = styled.input`
   outline: none;
   box-shadow: 0 5px 20px pink;
   border-radius: 10px 0 0 10px;
-  border: 1px solid pink;
+  border: 1px solid deeppink;
   font-size: 16pt;
   padding: 0 15px;
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const SearchButton = styled.button`
-  background: pink;
+  background: deeppink;
   width: 100px;
   color: white;
   border-radius: 0 10px 10px 0;
@@ -14,7 +14,7 @@ const SearchButton = styled.button`
   
   
   &:hover {
-    color: black;
+    color: deeppink;
     background: white;
   }
   
