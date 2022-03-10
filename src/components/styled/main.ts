@@ -6,7 +6,9 @@ const Main = styled.main`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  box-sizing: border-box;
+  & > * {
+    box-sizing: border-box;  
+  }
 `;
 
 export default Main;
