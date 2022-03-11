@@ -6,7 +6,8 @@ import CurrencyItem from "./currency-item";
 class CurrencyList extends React.Component<CurrencyListProps, CurrencyListState> {
     render() {
         return <CurrencyContainer>
-            {this.props.currencyList.map(currencyName => <CurrencyItem name={currencyName} key={currencyName}/>)}
+            {this.props.currencyList.map(currencyName =>
+                <CurrencyItem name={currencyName} key={currencyName} onRemoveCurrency={this.props.onRemoveCurrency}/>)}
         </CurrencyContainer>
     }
 }

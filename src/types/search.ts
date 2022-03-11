@@ -1,9 +1,9 @@
-import {CurrencyName} from "./currency";
+import {CurrencyListOperation} from "./app";
 
 export type SearchText = string;
 
 export interface SearchProps {
-    onAddCurrency: (currencyName: CurrencyName) => void,
+    onAddCurrency: CurrencyListOperation
 }
 
 export interface SearchState {
