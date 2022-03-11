@@ -11,7 +11,7 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
         return <CurrencyContainerItem>
             <CurrencyInfo>
                 <CurrencyName>{this.props.name}</CurrencyName>
-                <CurrencyPrice>{this.props.price}</CurrencyPrice>
+                <CurrencyPrice>${this.props.price}</CurrencyPrice>
             </CurrencyInfo>
             <CurrencyDelete>×</CurrencyDelete>
         </CurrencyContainerItem>
