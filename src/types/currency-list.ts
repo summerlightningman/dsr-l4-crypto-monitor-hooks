@@ -1,9 +1,9 @@
-import {Currency} from "./currency";
+import {Currency, CurrencyName} from "./currency";
 
 export type CurrencyList = Currency[];
 
 export interface CurrencyListProps {
-    currencyList: CurrencyList
+    currencyList: CurrencyName[]
 }
 
 export interface CurrencyListState {

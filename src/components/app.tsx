@@ -11,12 +11,7 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
 
         this.state = {
-            cryptocurrencyList: [
-                {
-                    name: 'DOGE',
-                    price: 0
-                }
-            ]
+            observableCurrencyList: ['DOGE']
         }
     }
 
@@ -24,7 +19,7 @@ class App extends React.Component<AppProps, AppState> {
     render() {
         return <Main>
             <Search/>
-            <CurrencyList currencyList={this.state.cryptocurrencyList}/>
+            <CurrencyList currencyList={this.state.observableCurrencyList}/>
         </Main>
     }
 }

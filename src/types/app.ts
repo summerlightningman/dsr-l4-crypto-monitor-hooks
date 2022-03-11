@@ -1,9 +1,9 @@
-import {CurrencyList} from "./currency-list";
+import {CurrencyName} from "./currency";
 
 export interface AppProps {
 
 }
 
 export interface AppState {
-    cryptocurrencyList: CurrencyList
+    observableCurrencyList: CurrencyName[]
 }

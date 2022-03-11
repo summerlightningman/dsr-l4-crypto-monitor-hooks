@@ -1,9 +1,9 @@
-import type {Currency} from "./currency";
+import type {CurrencyName, CurrencyPrice} from "./currency";
 
-export interface CurrencyItemProps extends Currency {
-
+export interface CurrencyItemProps {
+    name: CurrencyName
 }
 
-export interface CurrencyItemState extends Currency {
-
+export interface CurrencyItemState {
+    price: CurrencyPrice
 }
