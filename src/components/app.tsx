@@ -16,6 +16,7 @@ class App extends React.Component<AppProps, AppState> {
         }
 
         this.addObservableCurrency = this.addObservableCurrency.bind(this);
+        this.removeObservableCurrency = this.removeObservableCurrency.bind(this);
     }
 
     addObservableCurrency(name: CurrencyName) {
@@ -24,10 +25,21 @@ class App extends React.Component<AppProps, AppState> {
         }));
     }
 
+    removeObservableCurrency(name: CurrencyName) {
+        this.setState(state => ({
+            observableCurrencyList: state.observableCurrencyList.filter(currName => currName !== name)
+        }))
+    }
+
     render() {
         return <Main>
-            <Search onAddCurrency={this.addObservableCurrency}/>
-            <CurrencyList currencyList={this.state.observableCurrencyList}/>
+            <Search
+                onAddCurrency={this.addObservableCurrency}
+            />
+            <CurrencyList
+                currencyList={this.state.observableCurrencyList}
+                onRemoveCurrency={this.removeObservableCurrency}
+            />
         </Main>
     }
 }

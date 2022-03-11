@@ -12,7 +12,7 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
         super(props);
 
         this.state = {
-            price: '???'
+            price: '(Loading...)'
         };
 
         setInterval(this.update, 5000);
@@ -23,13 +23,17 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
         getCryptocurrencyPrice(this.props.name).then(price => this.setState({price}));
     }
 
+    removeFromObservables = () => {
+        this.props.onRemoveCurrency(this.props.name);
+    }
+
     render() {
         return <CurrencyContainerItem>
             <CurrencyInfo>
                 <CurrencyName>{this.props.name}</CurrencyName>
                 <CurrencyPrice>${this.state.price}</CurrencyPrice>
             </CurrencyInfo>
-            <CurrencyDelete>×</CurrencyDelete>
+            <CurrencyDelete onClick={this.removeFromObservables}>×</CurrencyDelete>
         </CurrencyContainerItem>
     }
 }
