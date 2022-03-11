@@ -1,4 +1,5 @@
 import {API_KEY} from "./constants";
+import {CurrencyName} from "./types/currency";
 
 // export const getCurrencyDict = async () =>
 //     fetch(`https://min-api.cryptocompare.com/data/all/coinlist?api_key=${API_KEY}`)
@@ -9,6 +10,11 @@ import {API_KEY} from "./constants";
 //             [data[val].CoinName]: val
 //         }), {}));
 
-export const getCryptocurrencyPrice = async (currencyName: string) =>
+export const getCryptocurrencyPrice = async (currencyName: CurrencyName) =>
     fetch(`https://min-api.cryptocompare.com/data/price?fsym=${currencyName}&tsyms=RUB&api_key=${API_KEY}`)
         .then(_ => _.json());
+
+export const isCryptocurrencyAvailable = async (currencyName: CurrencyName) =>
+    fetch(`https://min-api.cryptocompare.com/data/blockchain/list?api_key=${API_KEY}`)
+        .then(_ => _.json())
+        .then(resp => currencyName in resp.Data)

@@ -3,7 +3,7 @@ import {SearchProps, SearchState} from "../types/search";
 import SearchContainer from "./styled/search-container";
 import SearchInput from "./styled/search-input";
 import SearchButton from "./styled/search-button";
-import {getCryptocurrencyPrice} from "../http";
+import {getCryptocurrencyPrice, isCryptocurrencyAvailable} from "../http";
 
 class Search extends React.Component<SearchProps, SearchState> {
 
@@ -17,19 +17,17 @@ class Search extends React.Component<SearchProps, SearchState> {
 
 
     handleInput: KeyboardEventHandler<HTMLInputElement> = (e) => {
-        this.setState({value: e.currentTarget.value});
-
+        this.setState({value: e.currentTarget.value.toUpperCase()});
     }
 
     handleKeyPress: KeyboardEventHandler<HTMLInputElement> = e => {
         if (e.key === 'Enter')
-            this.search()
+            this.search();
     };
 
     search = () => {
-        getCryptocurrencyPrice('BTC')
-            .then(resp => resp.Response ? '???' : resp.USD)
-            .then(console.log);
+        isCryptocurrencyAvailable(this.state.value)
+            .then(isAvailable => console.log(isAvailable));
     }
 
     render() {
