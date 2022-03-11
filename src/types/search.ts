@@ -1,8 +1,9 @@
+import {CurrencyName} from "./currency";
+
 export type SearchText = string;
-export type CurrencyDict = Record<string, string>;
 
 export interface SearchProps {
-
+    onAddCurrency: (currencyName: CurrencyName) => void,
 }
 
 export interface SearchState {

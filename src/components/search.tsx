@@ -3,7 +3,7 @@ import {SearchProps, SearchState} from "../types/search";
 import SearchContainer from "./styled/search-container";
 import SearchInput from "./styled/search-input";
 import SearchButton from "./styled/search-button";
-import {getCryptocurrencyPrice, isCryptocurrencyAvailable} from "../http";
+import {isCryptocurrencyAvailable} from "../http";
 
 class Search extends React.Component<SearchProps, SearchState> {
 
@@ -27,7 +27,12 @@ class Search extends React.Component<SearchProps, SearchState> {
 
     search = () => {
         isCryptocurrencyAvailable(this.state.value)
-            .then(isAvailable => console.log(isAvailable));
+            .then(isAvailable => {
+                if (isAvailable) {
+                    this.props.onAddCurrency(this.state.value);
+                    this.setState({value: ''});
+                }
+            });
     }
 
     render() {

@@ -4,6 +4,7 @@ import Main from "./styled/main";
 
 import {AppProps, AppState} from "../types/app";
 import CurrencyList from "./currency-list";
+import {CurrencyName} from "../types/currency";
 
 
 class App extends React.Component<AppProps, AppState> {
@@ -13,12 +14,19 @@ class App extends React.Component<AppProps, AppState> {
         this.state = {
             observableCurrencyList: ['DOGE']
         }
+
+        this.addObservableCurrency = this.addObservableCurrency.bind(this);
     }
 
+    addObservableCurrency(name: CurrencyName) {
+        this.setState(state => ({
+            observableCurrencyList: [...state.observableCurrencyList, name]
+        }));
+    }
 
     render() {
         return <Main>
-            <Search/>
+            <Search onAddCurrency={this.addObservableCurrency}/>
             <CurrencyList currencyList={this.state.observableCurrencyList}/>
         </Main>
     }

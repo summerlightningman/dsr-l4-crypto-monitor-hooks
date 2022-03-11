@@ -14,6 +14,7 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
         this.state = {
             price: '???'
         };
+
         setInterval(this.update, 5000);
         this.update();
     }
