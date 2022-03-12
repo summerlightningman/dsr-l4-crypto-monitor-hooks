@@ -1,8 +1,8 @@
 import React, {KeyboardEventHandler} from "react";
 import {SearchProps, SearchState} from "../types/search";
-import SearchContainer from "./styled/search-container";
-import SearchInput from "./styled/search-input";
-import SearchButton from "./styled/search-button";
+import SearchContainer from "./styled/search/search-container";
+import SearchInput from "./styled/search/search-input";
+import SearchButton from "./styled/search/search-button";
 import {isCryptocurrencyAvailable} from "../http";
 
 class Search extends React.Component<SearchProps, SearchState> {
@@ -31,8 +31,10 @@ class Search extends React.Component<SearchProps, SearchState> {
                 if (isAvailable) {
                     this.props.onAddCurrency(this.state.value);
                     this.setState({value: ''});
-                }
-            });
+                } else
+                    alert('Currency not found')
+            })
+            .catch(_ => alert('Ошибка поиска'));
     }
 
     render() {
