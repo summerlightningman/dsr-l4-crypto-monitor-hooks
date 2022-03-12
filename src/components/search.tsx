@@ -34,15 +34,16 @@ class Search extends React.Component<SearchProps, SearchState> {
                 } else
                     alert('Currency not found')
             })
-            .catch(_ => alert('Ошибка поиска'));
+            .catch(() => alert('Ошибка поиска'));
     }
 
     render() {
         return <SearchContainer>
-            <SearchInput onInput={this.handleInput}
-                         value={this.state.value}
-                         placeholder="Type cryptocurrency name..."
-                         onKeyPress={this.handleKeyPress}
+            <SearchInput
+                onInput={this.handleInput}
+                value={this.state.value}
+                placeholder="Type cryptocurrency name..."
+                onKeyPress={this.handleKeyPress}
             />
             <SearchButton onClick={this.search}>Add</SearchButton>
         </SearchContainer>
