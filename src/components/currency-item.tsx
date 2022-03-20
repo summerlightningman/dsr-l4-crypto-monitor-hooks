@@ -70,7 +70,7 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
                 <CurrencyName data-testid="currency-name">{this.props.name}</CurrencyName>
                 <CurrencyPrice data-testid="currency-price">${this.state.price}{trendIcon}</CurrencyPrice>
             </CurrencyInfo>
-            <CurrencyDelete onClick={this.removeFromObservables}>×</CurrencyDelete>
+            <CurrencyDelete onClick={this.removeFromObservables} data-testid="currency-delete">×</CurrencyDelete>
         </CurrencyContainerItem>
     }
 }
