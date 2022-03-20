@@ -25,7 +25,7 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
 
     componentDidMount() {
         this.update();
-        this.intervalId = setInterval(this.update, 5000)
+        this.intervalId = setInterval(this.update, 5000);
     }
 
     componentWillUnmount() {
@@ -33,14 +33,14 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
             clearInterval(this.intervalId);
     }
 
-    getTrend = (oldPrice: Price, newPrice: Price): Trend => {
+    static getTrend = (oldPrice: Price, newPrice: Price): Trend => {
         if (oldPrice < newPrice) return Trend.UP
         if (oldPrice > newPrice) return Trend.DOWN
         return Trend.NONE
     }
 
-    getIconByTrend = () => {
-        switch (this.state.trend) {
+    static getIconByTrend = (trend: Trend) => {
+        switch (trend) {
             case (Trend.UP):
                 return <BsArrowUpRight color="greenyellow"/>
             case (Trend.DOWN):
@@ -53,7 +53,7 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
     update = () => {
         getCryptocurrencyPrice(this.props.name)
             .then(price => {
-                const trend = this.getTrend(this.state.price, price);
+                const trend = CurrencyItem.getTrend(this.state.price, price);
                 this.setState({price, trend});
             });
     }
@@ -63,13 +63,12 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
     }
 
     render() {
-        const trendIcon = this.getIconByTrend();
+        const trendIcon = CurrencyItem.getIconByTrend(this.state.trend);
 
         return <CurrencyContainerItem>
             <CurrencyInfo>
                 <CurrencyName>{this.props.name}</CurrencyName>
                 <CurrencyPrice>${this.state.price}{trendIcon}</CurrencyPrice>
-
             </CurrencyInfo>
             <CurrencyDelete onClick={this.removeFromObservables}>×</CurrencyDelete>
         </CurrencyContainerItem>

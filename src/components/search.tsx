@@ -15,7 +15,6 @@ class Search extends React.Component<SearchProps, SearchState> {
         };
     }
 
-
     handleInput: KeyboardEventHandler<HTMLInputElement> = (e) => {
         this.setState({value: e.currentTarget.value.toUpperCase()});
     }
@@ -32,7 +31,7 @@ class Search extends React.Component<SearchProps, SearchState> {
                     this.props.onAddCurrency(this.state.value);
                     this.setState({value: ''});
                 } else
-                    alert('Currency not found')
+                    alert('Currency not found');
             })
             .catch(() => alert('Ошибка поиска'));
     }
