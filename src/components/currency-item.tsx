@@ -67,8 +67,8 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
 
         return <CurrencyContainerItem>
             <CurrencyInfo>
-                <CurrencyName>{this.props.name}</CurrencyName>
-                <CurrencyPrice>${this.state.price}{trendIcon}</CurrencyPrice>
+                <CurrencyName data-testid="currency-name">{this.props.name}</CurrencyName>
+                <CurrencyPrice data-testid="currency-price">${this.state.price}{trendIcon}</CurrencyPrice>
             </CurrencyInfo>
             <CurrencyDelete onClick={this.removeFromObservables}>×</CurrencyDelete>
         </CurrencyContainerItem>

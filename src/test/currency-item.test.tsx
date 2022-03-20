@@ -1,5 +1,22 @@
 import CurrencyItem from "../components/currency-item";
 import {Trend} from "../types/currency-item";
+import {render, screen} from "@testing-library/react";
+
+describe('CurrencyItem renders correctly', () => {
+
+
+    test('name is visible', () => {
+        render(<CurrencyItem name="DOGE" onRemoveCurrency={() => {}}/>);
+        const name = screen.queryByTestId('currency-name');
+        expect(name).not.toBeNull();
+    });
+
+    test('price is visible', () => {
+        render(<CurrencyItem name="DOGE" onRemoveCurrency={() => {}}/>);
+        const price = screen.queryByTestId('currency-price');
+        expect(price).not.toBeNull();
+    });
+});
 
 describe('Trends gets correctly', () => {
     const testCases: Array<[string, number, number, Trend]> = [
