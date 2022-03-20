@@ -1,13 +1,26 @@
-import {isCryptocurrencyAvailable} from "../http";
+import {getCryptocurrencyList, getCryptocurrencyPrice} from "../http";
 
-describe(`Cryptocurrency availability works`, () => {
-   test(`BTC exists`, () => {
-       isCryptocurrencyAvailable('BTC')
-           .then(resp => expect(resp).toBeTruthy());
-   });
 
-   test('Bitcoin not exists', () => {
-       isCryptocurrencyAvailable('Bitcoin')
-           .then(resp => expect(resp).toBeFalsy());
-   })
+
+describe(`Availability works`, () => {
+    test(`BTC exists`, async () => {
+        const result = await getCryptocurrencyList();
+
+        expect(result).toBeDefined();
+        expect(result).toBeInstanceOf(Array);
+        expect(result).toContain('DOGE');
+        expect(result).toContain('BTC');
+    });
 });
+
+describe('Price requesting works', () => {
+    test('BTC\'s price returns correctly', async () => {
+        const result = await getCryptocurrencyPrice('BTC');
+        expect(result).toBeGreaterThanOrEqual(0);
+    });
+
+    test('Non-exists cryptocurrency price equals "???"', async () => {
+        const result = await getCryptocurrencyPrice('BiTiCi');
+        expect(result).toBe('???');
+    })
+})
