@@ -23,4 +23,4 @@ describe('Price requesting works', () => {
         const result = await getCryptocurrencyPrice('BiTiCi');
         expect(result).toBe('???');
     })
-})
+});
