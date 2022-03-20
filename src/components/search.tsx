@@ -1,11 +1,14 @@
 import React, {KeyboardEventHandler} from "react";
 import {SearchProps, SearchState} from "../types/search";
+import {TCurrencyList} from "../types/currency-list";
+
 import SearchContainer from "./styled/search/search-container";
 import SearchInput from "./styled/search/search-input";
 import SearchButton from "./styled/search/search-button";
-import {isCryptocurrencyAvailable} from "../http";
+import {getCryptocurrencyList} from "../http";
 
 class Search extends React.Component<SearchProps, SearchState> {
+    cryptocurrencyList: TCurrencyList;
 
     constructor(props: SearchProps) {
         super(props);
@@ -13,6 +16,9 @@ class Search extends React.Component<SearchProps, SearchState> {
         this.state = {
             value: ''
         };
+
+        this.cryptocurrencyList = [];
+        getCryptocurrencyList().then(items => this.cryptocurrencyList = items);
     }
 
     handleInput: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -25,15 +31,11 @@ class Search extends React.Component<SearchProps, SearchState> {
     };
 
     search = () => {
-        isCryptocurrencyAvailable(this.state.value)
-            .then(isAvailable => {
-                if (isAvailable) {
-                    this.props.onAddCurrency(this.state.value);
-                    this.setState({value: ''});
-                } else
-                    alert('Currency not found');
-            })
-            .catch(() => alert('Ошибка поиска'));
+        if (!this.cryptocurrencyList.includes(this.state.value))
+            return alert('Currency not found');
+
+        this.props.onAddCurrency(this.state.value);
+        this.setState({value: ''});
     }
 
     render() {

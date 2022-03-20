@@ -18,7 +18,6 @@ class App extends React.Component<AppProps, AppState> {
         this.addObservableCurrency = this.addObservableCurrency.bind(this);
         this.removeObservableCurrency = this.removeObservableCurrency.bind(this);
     }
-
     addObservableCurrency(name: CurrencyName) {
         this.setState(state => ({
             observableCurrencyList: [...state.observableCurrencyList, name]
