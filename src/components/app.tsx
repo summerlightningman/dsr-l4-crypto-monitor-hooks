@@ -1,46 +1,29 @@
-import React from 'react';
+import {FC, useState} from 'react';
 import Search from "./search";
 import Main from "./styled/main";
-
-import {AppProps, AppState} from "../types/app";
 import CurrencyList from "./currency-list";
 import {CurrencyName} from "../types/currency";
 
 
-class App extends React.Component<AppProps, AppState> {
-    constructor(props: AppProps) {
-        super(props);
+const App: FC = () => {
+    const [currencyList, setCurrencyList] = useState<CurrencyName[]>(['DOGE']);
 
-        this.state = {
-            observableCurrencyList: ['DOGE']
-        }
+    const addObservableCurrency = (name: CurrencyName) => setCurrencyList([...currencyList, name]);
+    const removeObservableCurrency = (name: CurrencyName) => setCurrencyList(
+        currencyList.filter(currName => currName !== name)
+    );
 
-        this.addObservableCurrency = this.addObservableCurrency.bind(this);
-        this.removeObservableCurrency = this.removeObservableCurrency.bind(this);
-    }
-    addObservableCurrency(name: CurrencyName) {
-        this.setState(state => ({
-            observableCurrencyList: [...state.observableCurrencyList, name]
-        }));
-    }
 
-    removeObservableCurrency(name: CurrencyName) {
-        this.setState(state => ({
-            observableCurrencyList: state.observableCurrencyList.filter(currName => currName !== name)
-        }))
-    }
+    return <Main>
+        <Search
+            onAddCurrency={addObservableCurrency}
+        />
+        <CurrencyList
+            currencyList={currencyList}
+            onRemoveCurrency={removeObservableCurrency}
+        />
+    </Main>
 
-    render() {
-        return <Main>
-            <Search
-                onAddCurrency={this.addObservableCurrency}
-            />
-            <CurrencyList
-                currencyList={this.state.observableCurrencyList}
-                onRemoveCurrency={this.removeObservableCurrency}
-            />
-        </Main>
-    }
 }
 
 export default App;
