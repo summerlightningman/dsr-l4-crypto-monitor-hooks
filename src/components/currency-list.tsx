@@ -1,15 +1,13 @@
-import {CurrencyListProps, CurrencyListState} from "../types/currency-list";
-import React from "react";
+import {CurrencyListProps} from "../types/currency-list";
+import {FC} from "react";
 import CurrencyContainer from "./styled/currency/currency-container";
 import CurrencyItem from "./currency-item";
 
-class CurrencyList extends React.Component<CurrencyListProps, CurrencyListState> {
-    render() {
+const CurrencyList: FC<CurrencyListProps> = ({currencyList, onRemoveCurrency}) => {
         return <CurrencyContainer>
-            {this.props.currencyList.map(currencyName =>
-                <CurrencyItem name={currencyName} key={currencyName} onRemoveCurrency={this.props.onRemoveCurrency}/>)}
+            {currencyList.map(currencyName =>
+                <CurrencyItem name={currencyName} key={currencyName} onRemoveCurrency={onRemoveCurrency}/>)}
         </CurrencyContainer>
-    }
 }
 
 export default CurrencyList

@@ -7,7 +7,3 @@ export interface CurrencyListProps {
     currencyList: TCurrencyList
     onRemoveCurrency: CurrencyListOperation
 }
-
-export interface CurrencyListState {
-
-}
