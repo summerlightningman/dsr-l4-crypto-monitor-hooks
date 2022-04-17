@@ -5,7 +5,3 @@ export type SearchText = string;
 export interface SearchProps {
     onAddCurrency: CurrencyListOperation
 }
-
-export interface SearchState {
-    value: SearchText
-}

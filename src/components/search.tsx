@@ -1,5 +1,5 @@
-import React, {KeyboardEventHandler} from "react";
-import {SearchProps, SearchState} from "../types/search";
+import React, {FC, KeyboardEventHandler, useEffect, useState} from "react";
+import {SearchProps, SearchText} from "../types/search";
 import {TCurrencyList} from "../types/currency-list";
 
 import SearchContainer from "./styled/search/search-container";
@@ -7,48 +7,38 @@ import SearchInput from "./styled/search/search-input";
 import SearchButton from "./styled/search/search-button";
 import {getCryptocurrencyList} from "../http";
 
-class Search extends React.Component<SearchProps, SearchState> {
-    cryptocurrencyList: TCurrencyList;
+const Search: FC<SearchProps> = ({onAddCurrency}) => {
+    const [value, setValue] = useState<SearchText>('');
+    const [cryptocurrencyList, setCryptocurrencyList] = useState<TCurrencyList>([]);
+    useEffect(() => {
+        getCryptocurrencyList()
+            .then(items => setCryptocurrencyList(items));
+    }, []);
 
-    constructor(props: SearchProps) {
-        super(props);
+    const handleInput: KeyboardEventHandler<HTMLInputElement> = (e) =>
+        setValue(e.currentTarget.value.toUpperCase());
 
-        this.state = {
-            value: ''
-        };
+    const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e =>
+        e.key === 'Enter' && search();
 
-        this.cryptocurrencyList = [];
-        getCryptocurrencyList().then(items => this.cryptocurrencyList = items);
-    }
-
-    handleInput: KeyboardEventHandler<HTMLInputElement> = (e) => {
-        this.setState({value: e.currentTarget.value.toUpperCase()});
-    }
-
-    handleKeyPress: KeyboardEventHandler<HTMLInputElement> = e => {
-        if (e.key === 'Enter')
-            this.search();
-    };
-
-    search = () => {
-        if (!this.cryptocurrencyList.includes(this.state.value))
+    const search = () => {
+        if (!cryptocurrencyList.includes(value))
             return alert('Currency not found');
 
-        this.props.onAddCurrency(this.state.value);
-        this.setState({value: ''});
+        onAddCurrency(value);
+        setValue('');
     }
 
-    render() {
-        return <SearchContainer>
-            <SearchInput
-                onInput={this.handleInput}
-                value={this.state.value}
-                placeholder="Type cryptocurrency name..."
-                onKeyPress={this.handleKeyPress}
-            />
-            <SearchButton onClick={this.search}>Add</SearchButton>
-        </SearchContainer>
-    }
+    return <SearchContainer>
+        <SearchInput
+            onInput={handleInput}
+            value={value}
+            placeholder="Type cryptocurrency name..."
+            onKeyDown={handleKeyDown}
+        />
+        <SearchButton onClick={search}>Add</SearchButton>
+    </SearchContainer>
+
 }
 
 export default Search
