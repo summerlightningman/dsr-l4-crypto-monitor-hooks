@@ -1,5 +1,5 @@
-import {CurrencyItemProps, CurrencyItemState, Trend} from "../types/currency-item";
-import React from "react";
+import {CurrencyItemProps, Trend} from "../types/currency-item";
+import {FC, useCallback, useEffect, useMemo, useState} from "react";
 import CurrencyContainerItem from "./styled/currency/currency-container-item";
 import CurrencyName from "./styled/currency/currency-name";
 import CurrencyPrice from "./styled/currency/currency-price";
@@ -9,37 +9,25 @@ import {CurrencyPrice as Price} from '../types/currency';
 import {BsArrowDownRight, BsArrowUpRight, BsList} from "react-icons/bs";
 import {getCryptocurrencyPrice} from "../http";
 
-class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState> {
-    intervalId: NodeJS.Timer | null;
+const CurrencyItem: FC<CurrencyItemProps> = ({name, onRemoveCurrency}) => {
+    const [price, setPrice] = useState<Price>('(Loading...)');
+    const [trend, setTrend] = useState<Trend>(Trend.NONE);
 
-    constructor(props: CurrencyItemProps) {
-        super(props);
+    useEffect(() => {
+        update();
+        const timer = setInterval(update, 5000);
+        return () => clearInterval(timer)
+    }, []);
 
-        this.state = {
-            price: '(Loading...)',
-            trend: Trend.NONE
-        };
+    const removeFromObservables = useCallback(() => onRemoveCurrency(name), []);
 
-        this.intervalId = null;
-    }
-
-    componentDidMount() {
-        this.update();
-        this.intervalId = setInterval(this.update, 5000);
-    }
-
-    componentWillUnmount() {
-        if (this.intervalId)
-            clearInterval(this.intervalId);
-    }
-
-    static getTrend = (oldPrice: Price, newPrice: Price): Trend => {
+    const getTrend = useCallback((oldPrice: Price, newPrice: Price): Trend => {
         if (oldPrice < newPrice) return Trend.UP
         if (oldPrice > newPrice) return Trend.DOWN
         return Trend.NONE
-    }
+    }, [price]);
 
-    static getIconByTrend = (trend: Trend) => {
+    const trendIcon = useMemo(() => {
         switch (trend) {
             case (Trend.UP):
                 return <BsArrowUpRight color="greenyellow"/>
@@ -47,32 +35,29 @@ class CurrencyItem extends React.Component<CurrencyItemProps, CurrencyItemState>
                 return <BsArrowDownRight color="red"/>
             case (Trend.NONE):
                 return <BsList color="white"/>
+            default:
+                return <BsList color="white"/>
         }
-    }
+    }, [trend]);
 
-    update = () => {
-        getCryptocurrencyPrice(this.props.name)
-            .then(price => {
-                const trend = CurrencyItem.getTrend(this.state.price, price);
-                this.setState({price, trend});
+    const update = () => {
+        getCryptocurrencyPrice(name)
+            .then(newPrice => {
+                const newTrend = getTrend(price, newPrice);
+                setPrice(newPrice);
+                setTrend(newTrend);
             });
-    }
+    };
 
-    removeFromObservables = () => {
-        this.props.onRemoveCurrency(this.props.name);
-    }
 
-    render() {
-        const trendIcon = CurrencyItem.getIconByTrend(this.state.trend);
+    return <CurrencyContainerItem>
+        <CurrencyInfo>
+            <CurrencyName data-testid="currency-name">{name}</CurrencyName>
+            <CurrencyPrice data-testid="currency-price">${price}{trendIcon}</CurrencyPrice>
+        </CurrencyInfo>
+        <CurrencyDelete onClick={removeFromObservables} data-testid="currency-delete">×</CurrencyDelete>
+    </CurrencyContainerItem>
 
-        return <CurrencyContainerItem>
-            <CurrencyInfo>
-                <CurrencyName data-testid="currency-name">{this.props.name}</CurrencyName>
-                <CurrencyPrice data-testid="currency-price">${this.state.price}{trendIcon}</CurrencyPrice>
-            </CurrencyInfo>
-            <CurrencyDelete onClick={this.removeFromObservables} data-testid="currency-delete">×</CurrencyDelete>
-        </CurrencyContainerItem>
-    }
 }
 
 export default CurrencyItem

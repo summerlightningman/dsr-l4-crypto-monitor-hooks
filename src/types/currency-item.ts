@@ -1,4 +1,4 @@
-import type {CurrencyName, CurrencyPrice} from "./currency";
+import type {CurrencyName} from "./currency";
 import {CurrencyListOperation} from "./app";
 
 export enum Trend {
@@ -10,9 +10,4 @@ export enum Trend {
 export interface CurrencyItemProps {
     name: CurrencyName,
     onRemoveCurrency: CurrencyListOperation
-}
-
-export interface CurrencyItemState {
-    price: CurrencyPrice,
-    trend: Trend
 }
